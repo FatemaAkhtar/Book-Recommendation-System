@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommendation System</title>
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif; /* Default font family */
+        }
+
+        /* Style the header section */
+        .header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Style the navigation bar */
+        .navbar {
+            overflow: hidden;
+            background-color: white;
+            color: black;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add shadow effect */
+        }
+
+        /* Style the links inside the navigation bar */
+        .navbar a {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        /* Change the color of links on hover */
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Style the content area */
+        .content {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://s3-books-images.s3.ap-south-1.amazonaws.com/caad3af9-4e2a-4d6c-bf7d-614eccb20dfc.png'); /* Adjust the opacity of the gradient for dimming */
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            color: white;
+            display: flex; /* Use flexbox */
+            flex-wrap: wrap; /* Allow flex items to wrap */
+            justify-content: space-around; /* Distribute items evenly */
+        }
+
+        /* Style the card */
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px; /* Adjust margin */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 20px); /* Adjust card width */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center; /* Center align text */
+            overflow: hidden; /* Hide overflow content */
+            transition: transform 0.3s, box-shadow 0.3s; /* Add transition effect */
+        }
+
+        /* Style the card title */
+        .card h3 {
+            margin: 10px 0 5px 0; /* Adjust margin */
+            font-size: 20px; /* Increase font size */
+            color: #888; /* Gray color for title */
+        }
+
+        /* Style the card text */
+        .card p {
+            margin: 0;
+            font-style: italic; /* Italicize text */
+            font-size: 16px; /* Adjust font size */
+            color: #b3b3b3; /* Light gray color */
+        }
+
+        /* Style the book image */
+        .book-image {
+            width: 100px; /* Adjust image width */
+            height: 150px; /* Adjust image height */
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Hover effect for cards */
+        .card:hover {
+            transform: translateY(-5px); /* Move card up on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+        }
+    .top-books-button {
+    position: absolute;
+    top: 20px; /* Adjust the top position as needed */
+    right: 20px; /* Adjust the right position as needed */
+    z-index: 1; /* Ensure the button is above other elements */
+}
+
+
+
+    </style>
+</head>
+<body>
+
+<!-- Header section -->
+<div class="header">
+    <h1>Welcome to the Book Recommendation System</h1>
+    <p style="font-size: 18px; font-weight: bold; text-align: center; color: #666; margin-top: 20px;">
+        Explore personalized book recommendations, search for your favorite titles, and learn more about our system.
+    </p>
+</div>
+
+<!-- Navigation bar -->
+<!-- Navigation bar -->
+<!-- Navigation bar -->
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/recommend">Recommendations</a>
+    <a href="#search">Search</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <div class="top-books-button">
+        <a href="#top-50-books">Top 50 Books</a>
+    </div>
+    <div style="clear:both;"></div> <!-- Clear the floats -->
+</div>
+
+
+
+<!-- Content area with background image -->
+<div class="content">
+    <!-- Card layout for top 50 books -->
+    {% for i in range(book_name|length) %}
+    {% if i % 2 == 0 %}
+    <div class="card">
+        <img src="{{image[i]}}" alt="Book Image" class="book-image">
+        <h3>{{book_name[i]}}</h3>
+        <p>By {{author[i]}}</p>
+        <p>Votes: {{votes[i]}}</p>
+        <p>Rating: {{ratings[i]}}</p>
+    </div>
+    {% else %}
+    <div class="card">
+        <img src="{{image[i]}}" alt="Book Image" class="book-image">
+        <h3>{{book_name[i]}}</h3>
+        <p>By {{author[i]}}</p>
+        <p>Votes: {{votes[i]}}</p>
+        <p>Rating: {{ratings[i]}}</p>
+    </div>
+    </div>
+    <div class="content">
+    {% endif %}
+    {% endfor %}
+</div>
+
+</body>
+</html>

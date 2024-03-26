@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommendation System</title>
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif; /* Default font family */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://miro.medium.com/v2/resize:fit:10026/0*_Sp6xvHk9iQXLw9L'); /* Background image with dim overlay */
+    background-size: cover; /* Cover the entire background */
+    background-position: center; /* Center the background image */
+}
+
+
+        /* Style the navigation bar */
+        .navbar {
+            background: linear-gradient(to right, #8B4513, #000000); /* Brown to black gradient background */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed; /* Fix navigation bar position */
+            width: 100%; /* Full width */
+            z-index: 1000; /* Ensure navigation bar is above other elements */
+            top: 0; /* Align to top */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add shadow effect */
+        }
+
+        /* Style the navigation bar links */
+        .navbar a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease; /* Add transition effect */
+        }
+
+        /* Change the color of navigation bar links on hover */
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white color on hover */
+        }
+
+        /* Style the search container */
+        .search-container {
+            text-align: center;
+            margin-top: 30vh; /* Adjust margin for vertical centering */
+        }
+
+        /* Style the search bar */
+        .search-bar {
+            width: 60%; /* Set search bar width */
+            padding: 15px 60px 15px 20px; /* Add padding */
+            border: 2px solid #8B4513; /* Add border */
+            border-radius: 30px; /* Round border */
+            font-size: 20px; /* Set font size */
+            outline: none; /* Remove outline */
+            margin-bottom: 20px; /* Add margin below the search bar */
+            transition: border-color 0.3s ease; /* Add transition effect for border color */
+            background-color: transparent; /* Transparent background */
+            color: white; /* Text color */
+        }
+
+        /* Change the border color of search bar on focus */
+        .search-bar:focus {
+            border-color: #000000; /* Change border color on focus */
+        }
+
+        /* Style the search icon */
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: white;
+        }
+
+        /* Style the search button */
+        .search-button {
+            background-color: transparent; /* Transparent background color */
+            color: white; /* Text color */
+            border: 2px solid white; /* White border */
+            border-radius: 30px; /* Round border */
+            padding: 15px 30px; /* Add padding */
+            font-size: 20px; /* Set font size */
+            cursor: pointer; /* Add pointer cursor */
+            transition: background-color 0.3s ease; /* Add transition effect */
+        }
+
+        /* Change background color of search button on hover */
+        .search-button:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white on hover */
+        }
+          .content {
+
+            padding: 20px;
+            color: white;
+            display: flex; /* Use flexbox */
+            flex-wrap: wrap; /* Allow flex items to wrap */
+            justify-content: space-around; /* Distribute items evenly */
+        }
+
+        /* Style the card */
+        .card {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 50%; /* Set width to 50% */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+        /* Style the card title */
+        .card h3 {
+            margin: 10px 0 5px 0; /* Adjust margin */
+            font-size: 20px; /* Increase font size */
+            color: #888; /* Gray color for title */
+        }
+
+        /* Style the card text */
+        .card p {
+            margin: 0;
+            font-style: italic; /* Italicize text */
+            font-size: 16px; /* Adjust font size */
+            color: #b3b3b3; /* Light gray color */
+        }
+
+        /* Style the book image */
+        .book-image {
+            width: 100px; /* Adjust image width */
+            height: 150px; /* Adjust image height */
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Hover effect for cards */
+        .card:hover {
+            transform: translateY(-5px); /* Move card up on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add box shadow on hover */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation bar -->
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/recommend">Recommendations</a>
+    <a href="#search">Search</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<!-- Search container -->
+<div class="search-container">
+    <form action="/recommend_books" method="POST">
+        <input type="text" class="search-bar" name="user_input" placeholder="Search for books...">
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+
+<div class="content">
+    <!-- Card layout for top 50 books -->
+    {% for i in data %}
+    {% if data %}
+    <div class="card">
+        <img src="{{i[2]}}" alt="Book Image" class="book-image">
+        <h3>{{i[0]}}</h3>
+        <p>By {{i[1]}}</p>
+    </div>
+    {% else %}
+    <div class="card">
+       <img src="{{i[2]}}" alt="Book Image" class="book-image">
+        <h3>{{i[0]}}</h3>
+        <p>By {{i[1]}}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+</body>
+</html>
